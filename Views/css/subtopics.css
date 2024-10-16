@@ -1,0 +1,47 @@
+/* Body background color */
+body {
+    background-color: #f0f2f5;
+  }
+  
+  /* Card styling */
+  .card {
+    background-color: #ffffff;
+    border-radius: 10px;
+  }
+  
+  /* Form input and dropdown styling */
+  .form-control, .form-select {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+    transition: background-color 0.3s;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Header styling */
+  header {
+    padding: 1rem;
+  }
+  
+  .navbar-brand {
+    font-size: 1.5rem;
+  }
+  
+  button.btn-outline-light {
+    border-radius: 20px;
+  }
+  
+  /* Responsive styling for smaller screens */
+  @media (max-width: 576px) {
+    .card {
+      margin: 0 10px;
+    }
+  }
+  
