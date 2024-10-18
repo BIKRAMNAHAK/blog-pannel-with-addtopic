@@ -40,7 +40,9 @@
                         <span>
                             <i class="bi bi-person-circle text-white fs-3"></i>
                         </span>
-                        <p class="text-white mb-1"><%= loggedInUser.email %></p>
+                        <p class="text-white mb-1">
+                            <%= loggedInUser.email %>
+                        </p>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white active" href="/">Dashboard</a>
@@ -64,6 +66,7 @@
             <main class="col-md-9 col-lg-10 offset-md-3 offset-lg-2 p-4" id="main-content">
                 <div class="container my-2">
                     <h1 class="text-center mb-4">All Blogs</h1>
+
                     <!-- Blog Cards Row -->
                     <div class="bloglist">
                         <div class="row">
@@ -80,31 +83,54 @@
                                             </p>
                                             <a href="#" class="btn btn-primary">Read More</a>
                                         </div>
-                                        <div class="card-footer text-muted d-flex justify-content-between align-items-center">
+                                        <div
+                                            class="card-footer text-muted d-flex justify-content-between align-items-center">
                                             Posted by
                                             <% let blogger=bloggers.find(b=> b.email === blog.userEmail); %>
-                                            <%= blogger ? blogger.name : 'Unknown' %>
-                                            
-                                            <!-- Comment Icon -->
-                                            <i class="bi bi-chat fs-4 comment-icon" onclick="toggleCommentField(this)"></i>
+                                                <%= blogger ? blogger.name : 'Unknown' %>
+
+                                                    <!-- Comment Icon -->
+                                                    <i class="bi bi-chat fs-4 comment-icon"
+                                                        onclick="toggleCommentField(this)"></i>
                                         </div>
-                                        
+
                                         <!-- Hidden Comment Input Field -->
                                         <div class="comment-field d-none">
-                                            <input type="text" class="form-control mt-2" placeholder="Write your comment...">
-                                            <button class="btn btn-primary btn-sm mt-2">Submit</button>
+                                            <form action="/comment/<%= blog._id %>" method="POST">
+                                                <input type="text" name="comment" class="form-control mt-2"
+                                                    placeholder="Write your comment...">
+                                                <button type="submit"
+                                                    class="btn btn-primary btn-sm mt-2">Submit</button>
+                                            </form>
                                         </div>
-                                        
-                                        <h5>Comments :</h5>
-                                        <div class="view-comments ">
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus saepe culpa repudiandae hic, iste reiciendis adipisci quibusdam incidunt. Iste voluptatibus suscipit non maxime cum corrupti amet consequuntur. Quae, distinctio qui?
-                                                Ipsum enim quos ducimus mollitia rerum delectus id nihil consequatur soluta nesciunt eaque nobis libero dolorem ea reiciendis numquam blanditiis aperiam omnis sapiente, necessitatibus provident voluptatum possimus nostrum commodi. Sint.</p>
+
+                                        <!-- Display Comments Section -->
+                                        <h5 class="ps-2">Comments:</h5>
+                                        <div class="view-comments">
+                                            <% if (blog.comments.length> 0) { %>
+                                                <ul class="list-group list-group-flush">
+                                                    <% blog.comments.forEach(comment=> { %>
+                                                        <li class="list-group-item">
+                                                            <strong>
+                                                                <%= comment.userEmail %>:
+                                                            </strong>
+                                                            <br>
+                                                            <%= comment.comment %>
+                                                        </li>
+                                                        <% }) %>
+                                                </ul>
+                                                <% } else { %>
+                                                    <p>No comments yet.</p>
+                                                    <% } %>
                                         </div>
+
                                     </div>
                                 </div>
-                            <% }) %>
+                                <% }) %>
                         </div>
                     </div>
+
+
                 </div>
             </main>
         </div>
@@ -113,11 +139,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-    
+
         function toggleCommentField(iconElement) {
-        const commentField = iconElement.parentElement.nextElementSibling;
-        commentField.classList.toggle('d-none');
-    }
+            const commentField = iconElement.parentElement.nextElementSibling;
+            commentField.classList.toggle('d-none');
+        }
     </script>
 </body>
 

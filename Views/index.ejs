@@ -98,15 +98,32 @@
                                         
                                         <!-- Hidden Comment Input Field -->
                                         <div class="comment-field d-none">
-                                            <input type="text" class="form-control mt-2" placeholder="Write your comment...">
-                                            <button class="btn btn-primary btn-sm mt-2">Submit</button>
+                                            <form action="/comment/<%= blog._id %>" method="POST">
+                                                <input type="text" name="comment" class="form-control mt-2"
+                                                    placeholder="Write your comment...">
+                                                <button type="submit"
+                                                    class="btn btn-primary btn-sm mt-2">Submit</button>
+                                            </form>
                                         </div>
                                         
                                         <!--view comments-->
-                                        <h5>Comments :</h5>
-                                        <div class="view-comments ">
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus saepe culpa repudiandae hic, iste reiciendis adipisci quibusdam incidunt. Iste voluptatibus suscipit non maxime cum corrupti amet consequuntur. Quae, distinctio qui?
-                                                Ipsum enim quos ducimus mollitia rerum delectus id nihil consequatur soluta nesciunt eaque nobis libero dolorem ea reiciendis numquam blanditiis aperiam omnis sapiente, necessitatibus provident voluptatum possimus nostrum commodi. Sint.</p>
+                                        <h5 class="ps-2">Comments:</h5>
+                                        <div class="view-comments">
+                                            <% if (blog.comments.length> 0) { %>
+                                                <ul class="list-group list-group-flush">
+                                                    <% blog.comments.forEach(comment=> { %>
+                                                        <li class="list-group-item">
+                                                            <strong>
+                                                                <%= comment.userEmail %>:
+                                                            </strong>
+                                                            <br>
+                                                            <%= comment.comment %>
+                                                        </li>
+                                                        <% }) %>
+                                                </ul>
+                                                <% } else { %>
+                                                    <p>No comments yet.</p>
+                                                    <% } %>
                                         </div>
                                     </div>
                                 </div>

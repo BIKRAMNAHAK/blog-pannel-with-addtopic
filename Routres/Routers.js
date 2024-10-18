@@ -9,6 +9,7 @@ const passport = require('../Confring/passport_confi')
 const isAuth = require('../meddlewere/midlewereAuth')
 const userProfile = require('../Controllers/userProfileController')
 const topic_controller = require('../Controllers/topicController')
+const commentController = require('../Controllers/CommentController')
 
 //Routing area
 
@@ -55,5 +56,8 @@ router.post('/topic_post',isAuth,topic_controller.addTopicControllerPost)
 router.get('/subTopic',isAuth ,topic_controller.renderSubtopic)
 router.post('/post_subTopic',isAuth, topic_controller.postSubtopicController)
 router.post('/delete_subtopic/:id',isAuth, topic_controller.deleteSubtopicController)
+
+//users comment
+router.post('/comment/:blogId', isAuth, commentController.addComment);
 
 module.exports = router;

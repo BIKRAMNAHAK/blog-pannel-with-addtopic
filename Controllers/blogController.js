@@ -1,5 +1,6 @@
 const blog_Models = require('../Modules/BlogModels')
 const username = require('../Modules/Authontication');
+const commentModel = require('../Modules/comments');
 const fs = require('fs')
 
 const addBlogFormController = (req, res) => {
@@ -7,11 +8,21 @@ const addBlogFormController = (req, res) => {
 }
 
 const getBlogController = async (req, res) => {
-    const blogs = await blog_Models.find({});
-    const bloggers = await username.find({});
-    const loggedInUser = req.user; 
-    res.render('allBlogs', { blogs: blogs, bloggers: bloggers , loggedInUser: loggedInUser });
-}
+    try {
+        const blogs = await blog_Models.find({}).populate('comments');
+        const bloggers = await username.find({});
+        const loggedInUser = req.user;
+
+        
+        const allComments = await commentModel.find({}).populate('blogId'); 
+
+        // Ensure comments are being passed correctly
+        res.render('allBlogs', { blogs, bloggers, loggedInUser });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Server error");
+    }
+};
 
 const myBlogerController = async (req, res) => {
     const bloggerEmail = req.user.email;

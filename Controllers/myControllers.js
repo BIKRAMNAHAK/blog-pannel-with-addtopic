@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 
 
 const defaultController = async (req, res) => {
-    const blogs = await blog_Models.find({});
+    const blogs = await blog_Models.find({}).populate('comments');
     const bloggers = await username.find({});
 
     const loggedInUser = req.user;
